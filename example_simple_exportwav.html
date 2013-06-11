@@ -8,6 +8,7 @@
     ul { list-style: none; }
     #recordingslist audio { display: block; margin-bottom: 10px; }
   </style>
+  <script src="jquery-2.0.2.min.js"></script>
 </head>
 <body>
 
@@ -62,10 +63,22 @@
 
   function createDownloadLink() {
     recorder && recorder.exportWAV(function(blob) {
+
+      // submission
+      var data = new FormData();
+      data.append('clip[file]', blob);
+
+      var xhr = new XMLHttpRequest;
+      xhr.open('POST', 'http://localhost:3000/', true);
+      xhr.send(data);
+
+
       var url = URL.createObjectURL(blob);
       var li = document.createElement('li');
       var au = document.createElement('audio');
       var hf = document.createElement('a');
+
+      console.log(blob);
       
       au.controls = true;
       au.src = url;
@@ -75,6 +88,19 @@
       li.appendChild(au);
       li.appendChild(hf);
       recordingslist.appendChild(li);
+
+      // $.ajax({
+      //   url: 'php/upload.php',
+      //   data: data,
+      //   cache: false,
+      //   contentType: false,
+      //   processData: false,
+      //   type: 'POST',
+      //   success: function(data){
+      //     alert(data);
+      //   }
+      // });
+
     });
   }
 

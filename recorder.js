@@ -2,7 +2,7 @@
 
   var WORKER_PATH = 'recorderWorker.js';
 
-  var Recorder = function(source, cfg){
+  var Recorder = function(source){
     this.context = source.context;
     this.node = this.context.createScriptProcessor(/*auto buffer size*/ 16384, 
                                                   /*mono input*/        1, 
